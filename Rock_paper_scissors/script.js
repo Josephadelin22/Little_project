@@ -1,70 +1,84 @@
 
 
-console.log("Hello World");
-
-function getComputerChoice() {
-    let randomNumber = Math.floor(Math.random() * 3);
-    if (randomNumber === 0) {
-        return "rock";
-        
-    } else if (randomNumber === 1) {
-            return "paper";
-    
-    } else {
-        return "scissors";
-    }
-}
-
-function getuserChoice() {
-    let input = prompt("Choose rock, paper, or scissors:");
-    return input.toLowerCase();
-}
-
+// variables globales
 let userscore = 0;
 let computerscore = 0;
+let round = 0;
+
+function getComputerChoice() {
+    const choices = ["rock", "paper", "scissors"];
+    const randomIndex = Math.floor(Math.random() * 3); // Math.random() génère un nombre aléatoire entre 0 et 1, multiplié par 3 pour obtenir un index entre 0 et 2
+    return choices[randomIndex];
+}
+   
+
+
+
+
 
 function playRound(userChoice, computerChoice){
     userChoice = userChoice.toLowerCase();
 
     if (userChoice === computerChoice) {
-        console.log("It's a Draw!");
+        return `It's a Draw!`;
 
     } else if(
         (userChoice === "rock" && computerChoice === "scissors") ||
         (userChoice === "scissors" && computerChoice === "paper") ||
         (userChoice === "paper" && computerChoice === "rock")
     ) {
-      console.log(`You win! ${userChoice} beats ${computerChoice}`);
-      userscore++;  
+      
+      userscore++; // le joueur gagne un point  
+      return `You win!${userChoice} beats ${computerChoice}`;
 
     } else {
-        console.log(`You lose! ${computerChoice} beats ${userChoice}`);
         computerscore++;
+        return `You lose! ${computerChoice} beats ${userChoice}`;
     }
-    console.log(`Score => You: ${userscore} | Computer : ${computerscore}`);
-
+    
 }
 
-function game() {
+// Fonction pour jouer une partie quand l'utilisateur clique sur un bouton
+function playGame(userChoice) {
+    if (round >= 5) return; // Ne pas jouer si 5 rounds sont déjà joués
+    
+    const computerChoice = getComputerChoice();
+    const resultText= playRound(userChoice, computerChoice);
+    round++; // on passe au round suivant
+
+    document.getElementById("result").textContent = resultText
+    document.getElementById("score").textContent = `score : You ${userscore} - computer ${computerscore}`;
+
+    if (round === 5) {
+        let lastMessage = '';
+        if (userscore > computerscore) {
+            lastMessage = "You win the game !";
+    }       else if (computerscore > userscore) {
+            lastMessage = "You lose the game"; 
+    }       else {
+            lastMessage = "its a draw";
+    }
+
+    document.getElementById("finalResult").textContent = lastMessage;
+
+    // affichage rejouer
+    document.getElementById("restartBtn").style.display = "inline-block";
+
+    }
+}
+
+
+// Fonction pour réinitialiser le jeu
+function resetGame() {
     
     userscore = 0;
     computerscore = 0;
-    for (let i = 0; i < 5; i++) {
-      const user = getuserChoice();
-      const computer = getComputerChoice();
-      playRound(user, computer);
-    }
+    round = 0;
 
-
-    if (userscore > computerscore) {
-        console.log("You won the game!");
-    } else if (computerscore > userscore) {
-        console.log("Computer won the game!");
-
-    } else {
-        console.log("The game is a draw!");
-    }
+    document.getElementById("result").textContent = "";
+    document.getElementById("score").textContent = "";
+    document.getElementById("finalResult").textContent = "";
+    
+    // cacher le bouton de redémarrage
+    document.getElementById("restartBtn").style.display = "none";
 }
-
-
-game();

@@ -3,10 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <title>Rock Paper Scissors</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(to right, #ece9e6, #ffffff);
+
+        }
+
+        h1{
+            margin-bottom: 1rem;
+        }
+        /* style des boutons*/
+        .btn {
+            font-size: 1rem;
+            margin: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #47854a;
+        }
+
+        #result, #score, #finalResult {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        /* image intro du jeu*/
+        .intro {
+            max-width: 200px;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        /* Bouton pour rejouer mais cache au debut*/
+        #restartBtn {
+            display: none;
+            margin-top: 2rem;
+        }
+
+    </style>   
 </head>
 <body>
+
+    <img src="game.png" alt="Jeu Rock Paper Scissors" class="intro"/>
+
+    <h1> Rock - Paper - Scissors </h1>
+
+    <div>
+        <button class="btn" onclick="playGame('rock')">Rock</button>
+        <button class="btn" onclick="playGame('paper')">Paper</button>
+        <button class="btn" onclick="playGame('scissors')">Scissors</button>
+    </div>
+
+    <div id="result"></div>
+    <div id="score"></div>
+    <div id="finalResult"></div>
     
-    <!-- Le jeu se joue dans la console -->
+    <button id="restartBtn" class="btn" onclick="resetGame()">Restart Game</button>
+    
+    
      <script src="script.js"></script>
 </body>
 </html>
